@@ -4,7 +4,7 @@ FROM debian:latest
 COPY Userinstall.sh /tmp/Userinstall.sh
 
 # Make the script executable
-RUN chmod +x /tmp/Userinstdockall.sh
+RUN chmod +x /tmp/Userinstall.sh
 
 # Run the script
 CMD ["/bin/bash", "-c", "/tmp/Userinstall.sh && /bin/bash"]

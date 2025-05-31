@@ -32,7 +32,7 @@ mkdir -p /home/minecraft
 
 # Download the Minecraft server JAR (example, replace with your desired version)
 # Replace the link with the desired Minecraft server version
-wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/84194a27586ba32c3b535599959f9491f4775a86/server.jar
+wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
 
 # Make sure the minecraft user owns the directory
 chown -R minecraft:minecraft /home/minecraft
