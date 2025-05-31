@@ -34,6 +34,9 @@ mkdir -p /home/minecraft
 # Replace the link with the desired Minecraft server version
 wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
 
+#Setup server
+java -jar server.jar --nogui
+
 # Make sure the minecraft user owns the directory
 chown -R minecraft:minecraft /home/minecraft
 
