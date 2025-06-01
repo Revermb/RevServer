@@ -8,15 +8,17 @@
 
 # Update and install packages
 apt update && apt upgrade -y
-apt install xrdp qbittorrent docker wget -y
+apt install xrdp qbittorrent-nox docker wget -y
 
 #Add users
 adduser minecraft --quiet --system --group
 echo "Create password for minecraft user"
 passwd minecraft
+sudo usermod -s /usr/sbin/nologin minecraft
 adduser qbittorrent --quiet --system --group
 echo "Create password for qbittorrent user"
 passwd qbittorrent
+sudo usermod -s /usr/sbin/nologin qbittorrent
 
 # Install Java (globally)
 wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
@@ -41,7 +43,7 @@ java -jar /home/minecraft/server.jar --nogui
 #Setup Qbittorrent-nox server
 cd /home/qbittorrent
 su qbittorrent
-qbittorrent
+qbittorrent-nox
 # Create systemd service file for qBittorrent
 cat <<EOF > /etc/systemd/system/qbittorrent.service
 [Unit]
@@ -50,7 +52,7 @@ After=network.target
 
 [Service]
 User=qbittorrent
-ExecStart=/usr/bin/qbittorrent -d --webui-port=8080
+ExecStart=/usr/bin/qbittorrent-nox -d --webui-port=8080
 Restart=on-failure
 
 [Install]
