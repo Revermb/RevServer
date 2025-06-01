@@ -116,7 +116,7 @@ After=network.target
 User=minecraft
 WorkingDirectory=/home/minecraft
 ExecStart=/usr/lib/jvm/jdk-21.0.7-oracle-x64/bin/java -Xms1G -Xmx4G -jar /home/minecraft/server.jar --nogui
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
