@@ -25,6 +25,7 @@ chown -R minecraft:minecraft /home/minecraft
 chmod 766 /home/minecraft/server.jar
 
 #Setup server
+cd /home/minecraft
 java -jar /home/minecraft/server.jar --nogui
 
 # Create systemd service file for qBittorrent
