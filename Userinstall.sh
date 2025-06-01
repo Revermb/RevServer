@@ -33,33 +33,24 @@ mkdir -p /home/qbittorrent
 wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
 
 # Make sure the minecraft user owns the directory & Jar
+echo \n/////////////////////\npermissions for minecraft setup
 chown -R minecraft:minecraft /home/minecraft
 chmod 766 /home/minecraft/server.jar
 
 #Setup Minecraft server
+echo \n/////////////////////\nsetting up minecraft
 cd /home/minecraft
 java -jar /home/minecraft/server.jar --nogui
 
 #Setup Qbittorrent-nox server
+echo \n/////////////////////\nsetting up qbittorrent
 cd /home/qbittorrent
 su qbittorrent
+echo exit webinterface with ctrl + c
 qbittorrent-nox
-# Create systemd service file for qBittorrent
-cat <<EOF > /etc/systemd/system/qbittorrent.service
-[Unit]
-Description=qBittorrent Daemon
-After=network.target
-
-[Service]
-User=qbittorrent
-ExecStart=/usr/bin/qbittorrent-nox -d --webui-port=8080
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-EOF
 
 # Create systemd service file for Minecraft
+echo \n/////////////////////\nCreating Systemd services
 cat <<EOF > /etc/systemd/system/minecraft.service
 [Unit]
 Description=Minecraft Server
@@ -77,7 +68,7 @@ EOF
 
 # Reload systemd, enable and start services
 systemctl daemon-reload
-systemctl enable qbittorrent.service
+systemctl enable qbittorrent-nox@qbittorrent
 systemctl enable minecraft.service
-systemctl start qbittorrent.service
+systemctl start qbittorrent-nox@qbittorrent
 systemctl start minecraft.service
