@@ -19,21 +19,24 @@ wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
 dpkg -i jdk-21_linux-x64_bin.deb
 apt-get install -f -y
 
-# Create the Minecraft directory if it doesn't exist
+# Create the directories if they don't exist
 mkdir -p /home/minecraft
+mkdir -p /home/qbittorrent
 
-# Download the Minecraft server JAR (example, replace with your desired version)
-# Replace the link with the desired Minecraft server version
+# Download the Minecraft server JAR
 wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
 
-# Make sure the minecraft user owns the directory
+# Make sure the minecraft user owns the directory & Jar
 chown -R minecraft:minecraft /home/minecraft
 chmod 766 /home/minecraft/server.jar
 
-#Setup server
+#Setup Minecraft server
 cd /home/minecraft
 java -jar /home/minecraft/server.jar --nogui
 
+#Setup Qbittorrent-nox server
+cd /home/qbittorrent
+su qbittorrent && qbittorrent && exit
 # Create systemd service file for qBittorrent
 cat <<EOF > /etc/systemd/system/qbittorrent.service
 [Unit]
@@ -42,7 +45,7 @@ After=network.target
 
 [Service]
 User=qbittorrent
-ExecStart=/usr/bin/qbittorrent-nox -d --webui-port=8080
+ExecStart=/usr/bin/qbittorrent -d --webui-port=8080
 Restart=on-failure
 
 [Install]
