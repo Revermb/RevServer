@@ -1,26 +1,12 @@
 #!/bin/bash
 
-# Prompt for username
-read -p "Enter username: " username_user
-
-# Prompt for password
-read -s -p "Enter password: " password_user
-echo  # Add a newline after the password prompt
-
 # Update and install packages
 apt update && apt upgrade -y
 apt install xrdp qbittorrent docker wget -y
 
-# Add users
-adduser "$username_user" --quiet
+#Add users
 adduser minecraft --quiet --system --group
 adduser qbittorrent --quiet --system --group
-
-# Set password for the user
-echo "$username_user:$password_user" | chpasswd
-
-# Add user to sudo group
-usermod -aG sudo "$username_user"
 
 # Install Java (globally)
 wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
