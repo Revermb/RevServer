@@ -62,27 +62,20 @@ EOF
 #////////////////////////////////////////////////////////////
 #/////////////////QBITTORRENT////////////////////////////////
 #////////////////////////////////////////////////////////////
-#Setup Qbittorrent server
+#Setup Qbittorrent user enviroment
 echo \n/////////////////////\n setting up qbittorrent
 mkdir -p /home/qbituser
+mkdir -p /home/qbituser/rv-nas
 cd /home/qbituser
-
-# Create necessary directories
-mkdir -p /home/qbituser/.config/qBittorrent
-mkdir -p /home/qbituser/downloads
-mkdir -p /home/qbituser/downloads/temp
-mkdir -p /home/qbituser/torrents
 
 # Set ownership and permissions
 chown -R qbituser:qbituser /home/qbituser
 chmod 750 /home/qbituser
-chmod 770 /home/qbituser/downloads
-chmod 770 /home/qbituser/downloads/temp
-chmod 750 /home/qbituser/torrents
+chmod 750 /home/qbituser/rv-nas
 
-# Set proper permissions
-chown -R qbituser:qbituser /home/qbituser/.config
-chmod 600 /home/qbituser/.config/qBittorrent/qBittorrent.conf
+#Starting qbittorrent
+su qbituser
+echo y | qbittorrent
 
 #//////////////////////////////////////////////////////////////
 #/////////////////////SYSTEMD ENABLES//////////////////////////
