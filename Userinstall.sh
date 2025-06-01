@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#To run this file as safe as possible, please do
+#```su -```
+#before running it via
+#```bash ./Userinstall.sh```
+
+
 # Update and install packages
 apt update && apt upgrade -y
 apt install xrdp qbittorrent docker wget -y
