@@ -12,7 +12,11 @@ apt install xrdp qbittorrent docker wget -y
 
 #Add users
 adduser minecraft --quiet --system --group
+echo "Create password for minecraft user"
+passwd minecraft
 adduser qbittorrent --quiet --system --group
+echo "Create password for qbittorrent user"
+passwd qbittorrent
 
 # Install Java (globally)
 wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
