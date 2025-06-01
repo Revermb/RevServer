@@ -39,6 +39,8 @@ chmod 766 /home/minecraft/server.jar
 
 #Setup Minecraft server
 echo \n/////////////////////\n setting up minecraft
+ufw enable
+ufw allow 25565
 cd /home/minecraft
 java -jar /home/minecraft/server.jar --nogui
 
