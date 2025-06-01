@@ -115,7 +115,7 @@ After=network.target
 [Service]
 User=minecraft
 WorkingDirectory=/home/minecraft  # Or wherever your server files are
-ExecStart=/usr/bin/java -Xms1G -Xmx4G -jar /home/minecraft/server.jar nogui
+ExecStart=/usr/bin/java -Xms1G -Xmx4G -jar /home/minecraft/server.jar --nogui
 Restart=on-failure
 
 [Install]
