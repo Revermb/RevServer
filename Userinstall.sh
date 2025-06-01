@@ -11,7 +11,7 @@
 
 # Update and install packages
 apt update && apt upgrade -y
-apt install xrdp qbittorrent wget -y
+apt install xrdp qbittorrent-nox wget -y
 
 #Add users
 adduser minecraft --quiet --system --group
@@ -74,15 +74,14 @@ chmod 750 /home/qbituser
 chmod 750 /home/qbituser/rv-nas
 
 #Starting qbittorrent
-su qbituser
-echo y | qbittorrent
+echo y | qbittorrent-nox
 
 #//////////////////////////////////////////////////////////////
 #/////////////////////SYSTEMD ENABLES//////////////////////////
 #//////////////////////////////////////////////////////////////
 # Reload systemd, enable and start services
 systemctl daemon-reload
-systemctl enable qbittorrent@qbituser
+systemctl enable qbittorrent-nox@qbituser
 systemctl enable minecraft.service
-systemctl start qbittorrent@qbituser
+systemctl start qbittorrent-nox@qbituser
 systemctl start minecraft.service
