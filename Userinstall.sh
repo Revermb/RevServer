@@ -40,7 +40,8 @@ java -jar /home/minecraft/server.jar --nogui
 
 #Setup Qbittorrent-nox server
 cd /home/qbittorrent
-su qbittorrent && qbittorrent && exit
+su qbittorrent
+qbittorrent
 # Create systemd service file for qBittorrent
 cat <<EOF > /etc/systemd/system/qbittorrent.service
 [Unit]
