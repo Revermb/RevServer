@@ -43,17 +43,43 @@ cd /home/minecraft
 java -jar /home/minecraft/server.jar --nogui
 
 #Setup Qbittorrent-nox server
-echo \n/////////////////////\n setting up qbittorrent
+echo -e "\n/////////////////////\n setting up qbittorrent"
 cd /home/qbituser
 
-# Create qBittorrent service configuration directory
+# Create necessary directories
 mkdir -p /home/qbituser/.config/qBittorrent
-chown -R qbituser:qbituser /home/qbituser/.config/qBittorrent
+mkdir -p /home/qbituser/downloads
+mkdir -p /home/qbituser/downloads/temp
+mkdir -p /home/qbituser/torrents
 
-# Set proper permissions for qBittorrent home
+# Set ownership and permissions
+chown -R qbituser:qbituser /home/qbituser
 chmod 750 /home/qbituser
+chmod 770 /home/qbituser/downloads
+chmod 770 /home/qbituser/downloads/temp
+chmod 750 /home/qbituser/torrents
 
-# Create default qBittorrent config (optional but recommended)
+# Create qBittorrent service file
+cat <<EOF > /etc/systemd/system/qbittorrent-nox@.service
+[Unit]
+Description=qBittorrent-nox service
+After=network.target
+
+[Service]
+Type=forking
+User=%i
+Group=%i
+UMask=007
+Environment="XDG_CONFIG_HOME=/home/%i/.config"
+ExecStart=/usr/bin/qbittorrent-nox -d --webui-port=8080
+ExecStop=/usr/bin/killall -w -s 9 /usr/bin/qbittorrent-nox
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Create enhanced qBittorrent config
 cat <<EOF > /home/qbituser/.config/qBittorrent/qBittorrent.conf
 [LegalNotice]
 Accepted=true
@@ -64,9 +90,19 @@ WebUI\Port=8080
 WebUI\CSRFProtection=true
 WebUI\ClickjackingProtection=true
 WebUI\SecureCookie=true
+Downloads\SavePath=/home/qbituser/downloads
+Downloads\TempPath=/home/qbituser/downloads/temp
+Downloads\TempPathEnabled=true
+Connection\PortRangeMin=6881
+Connection\RandomPort=false
+BitTorrent\MaxConnecs=500
+BitTorrent\MaxConnecsPerTorrent=100
+BitTorrent\MaxRatio=1
+BitTorrent\MaxRatioAction=0
 EOF
 
-chown qbituser:qbituser /home/qbituser/.config/qBittorrent/qBittorrent.conf
+# Set proper permissions
+chown -R qbituser:qbituser /home/qbituser/.config
 chmod 600 /home/qbituser/.config/qBittorrent/qBittorrent.conf
 
 # Create systemd service file for Minecraft
