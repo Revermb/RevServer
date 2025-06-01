@@ -22,10 +22,10 @@ wget -O /home/minecraft/server.jar https://piston-data.mojang.com/v1/objects/e6e
 
 # Make sure the minecraft user owns the directory
 chown -R minecraft:minecraft /home/minecraft
+chmod 766 /home/minecraft/server.jar
 
 #Setup server
 java -jar server.jar --nogui
-
 
 # Create systemd service file for qBittorrent
 cat <<EOF > /etc/systemd/system/qbittorrent.service
